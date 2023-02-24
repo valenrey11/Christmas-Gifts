@@ -68,7 +68,7 @@ export function Home() {
                 </div>
                 <Modal toggleModal={toggleModal} addGift={addGift} isOpen={isOpen} />
                 <ListOfGifts giftCont={giftCont} toggleModal={toggleModal} deleteGift={deleteGift} />
-                <button onClick={deleteAllGifts} className='hover:cursor-pointer mt-5 bg-amber-300 w-1/4 text-center rounded-md p-2'>Eliminar todos</button>
+                <button onClick={deleteAllGifts} className='hover:cursor-pointer mt-5 bg-amber-300 w-1/3 sm:w-1/4 text-center rounded-md p-2'>Eliminar todos</button>
             </article>
         </div>
     )

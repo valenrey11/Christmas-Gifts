@@ -21,7 +21,7 @@ export function Gift({ gift, deleteGift, toggleModal }) {
             <p className="bg-gray-300 px-2 rounded-md">{finalProductName}</p>
             <p className="bg-blue-300 px-2 rounded-md ">{gift.cantidad}</p>
             <p className="bg-green-800 px-2 text-gray-100 rounded-md">{gift.destinatario}</p>
-            <img src={editPng} className=" h-6 px-2 rounded-md hover:cursor-pointer my-auto"
+            <img src={editPng} className="h-6 sm:w-6 rounded-md hover:cursor-pointer my-auto"
                 onClick={handleEdit} />
             <div className="bg-red-500 px-2 rounded-md hover:cursor-pointer my-auto"
                 gift-nombre={gift.nombre}

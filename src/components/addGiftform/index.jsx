@@ -1,9 +1,12 @@
 import { useContext, useEffect, useRef } from "react"
 import GiftsContext from "../../context/GiftContext"
-export function AddGiftForm({ addGift, toggleModal }) {
+import useAddGift from "../../customHooks/useAddGift"
+export function AddGiftForm({ toggleModal }) {
     const [giftCont, setGiftCont, idGiftToEditCont, setIdGiftToEditCont] = useContext(GiftsContext)
+    const { addGift } = useAddGift()
     const formEl = useRef()
     const giftToEdit = giftCont.find(g => g.id === idGiftToEditCont)
+
     useEffect(() => {
         if (idGiftToEditCont.length > 0) {
             document.querySelector('.input-nombre').value = giftToEdit.nombre
@@ -33,8 +36,18 @@ export function AddGiftForm({ addGift, toggleModal }) {
         toggleModal()
         setIdGiftToEditCont([])
     }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const textFromInput = e.target.nombre.value
+        const imgUrl = e.target.url.value
+        const cantidad = e.target.cantidad.value
+        const destinatario = e.target.destinatario.value
+        const gift = addGift({ textFromInput, imgUrl, cantidad, destinatario })
+        setGiftCont(prev => [...prev, gift])
+        toggleModal()
+    }
     return (
-        <form ref={formEl} className="w-full flex flex-col h-full justify-between" onSubmit={addGift}>
+        <form ref={formEl} className="w-full flex flex-col h-full justify-between" onSubmit={handleSubmit}>
             <input name="nombre"
                 placeholder="Nombre de regalo"
                 className="input-nombre p-2 rounded-md"
@@ -58,7 +71,9 @@ export function AddGiftForm({ addGift, toggleModal }) {
             </div>
             <div className="flex justify-between">
                 <button type="button" onClick={handleCancelBtn} className="hover:text-inherit flex decoration justify-center items-center text-black w-1/3 hover:cursor-pointer text-center bg-amber-300 rounded-md">Cancelar</button>
-                {idGiftToEditCont.length === 0 ? <button type="submit" className="bg-red-500 text-white">Agregar</button> : <button type="button" onClick={saveAndRemoveCont} className="bg-amber-500 text-white">Guardar</button>}
+
+                {idGiftToEditCont.length === 0 ? <button type="submit"
+                    className="bg-red-500 text-white">Agregar</button> : <button type="button" onClick={saveAndRemoveCont} className="bg-amber-500 text-white">Guardar</button>}
 
             </div>
         </form>)

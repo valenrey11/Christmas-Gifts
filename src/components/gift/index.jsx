@@ -1,13 +1,13 @@
 import { useEffect, useContext } from "react"
 import GiftContext from "../../context/GiftContext";
 import editPng from "../../assets/edit-button.png"
-
+import { useUpperFirstLetter } from "../../customHooks/useUpperFirstLetter";
 
 export function Gift({ gift, deleteGift, toggleModal }) {
     const [, , idGiftToEditCont, setIdGiftToEditCont] = useContext(GiftContext)
-    const firstLetterUpper = gift.nombre.charAt(0).toUpperCase()
-    const restOfText = gift.nombre.slice(1)
-    const finalProductName = firstLetterUpper + restOfText
+    const finalProductName = useUpperFirstLetter(gift.nombre)
+    useEffect(() => {
+    }, [])
     const handleEdit = () => {
         setIdGiftToEditCont(gift.id)
         toggleModal()

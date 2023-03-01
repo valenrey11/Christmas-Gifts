@@ -9,6 +9,7 @@ import GiftsContext from "../../context/GiftContext"
 export function Home() {
     const [giftCont, setGiftCont] = useContext(GiftsContext)
     const isMounted = useRef(false);
+    const firstElToFocus = useRef(null);
     useEffect(() => {
         const listFromLocal = useEffectGetLocal()
         setGiftCont(listFromLocal)
@@ -34,14 +35,28 @@ export function Home() {
     const [isOpen, setIsOpen] = useState(false)
     const toggleModal = () => {
         setIsOpen(!isOpen)
+
+    }
+    const handleKeyDown = (e) => {
+        console.log(e.key)
+        const allElements = document.querySelectorAll('button, a, input, select, textarea');
+        const lastElement = allElements[allElements.length - 1];
+        if (e.key === "Tab" && document.activeElement === lastElement) {
+            e.preventDefault()
+            firstElToFocus.current.focus()
+        }
+        if (e.key === "Enter") {
+            e.preventDefault()
+            e.target.click()
+        }
     }
 
     return (
         <div className="home w-full">
-            <article className=" bg-gray-200/80 rounded-md p-5 max-w-2xl mx-auto">
+            <article onKeyDown={handleKeyDown} className=" bg-gray-200/80 rounded-md p-5 max-w-2xl mx-auto">
                 <div className="flex items-center justify-between">
                     <h2 className="text-4xl text-black mb-2">Regalos:</h2>
-                    <button type="button" onClick={toggleModal}
+                    <button type="button" onClick={toggleModal} autoFocus ref={firstElToFocus}
                         className='hover:cursor-pointer bg-red-500
                         w-1/4 text-center rounded-md p-2'>Agregar
                     </button>
